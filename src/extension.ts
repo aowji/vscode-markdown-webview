@@ -47,6 +47,15 @@ export function activate(context: vscode.ExtensionContext) {
 			<title>Markdown Preview</title>
 			<link rel="stylesheet" href="https://unpkg.com/github-markdown-css/github-markdown.css">
 			<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets/styles/1c-light.min.css">
+			<style>
+				.markmap {
+					position: relative;
+				}
+				.markmap > svg {
+					width: 100%;
+					min-height: 300px;
+				}
+			</style>
 		</head>
 		<body>
 			<div class="markdown-body">
