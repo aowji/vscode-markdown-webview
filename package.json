@@ -1,0 +1,64 @@
+{
+  "name": "lw",
+  "displayName": "lw",
+  "description": "",
+  "version": "0.0.2",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "lw.helloWorld",
+        "title": "LW"
+      },
+      {
+        "command": "lw.print",
+        "title": "LW"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "editorLangId == markdown",
+          "command": "lw.helloWorld",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "copy": "cp node_modules",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
+    "@types/markdown-it-container": "^2.0.10",
+    "@types/markdown-it-emoji": "^3.0.1",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.93.0",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.9.1",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "markdown-it": "^14.1.0",
+    "markdown-it-emoji": "^3.0.0",
+    "markdown-it-highlightjs": "^4.2.0",
+    "puppeteer": "^23.4.0"
+  }
+}
