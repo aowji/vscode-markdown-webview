@@ -2,7 +2,12 @@
   "name": "lw",
   "displayName": "lw",
   "description": "",
-  "version": "0.0.3",
+  "version": "0.0.4",
+	"publisher": "aowji",
+	"license": "MIT",
+  "repository": {
+    "url": "https://github.com/aowji/vscode-markdown-webview.git"
+  },
   "engines": {
     "vscode": "^1.93.0"
   },
@@ -35,7 +40,6 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "copy": "cp node_modules",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",

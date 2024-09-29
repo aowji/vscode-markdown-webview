@@ -37,7 +37,8 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	}
 
-	function genWebviewContent(markdownText: string) {
+	function genWebviewContent(markdownText: string, baseUrl: string | null) {
+		baseUrl = baseUrl ? `<base href="${baseUrl}" />` : "";
 		var content = md.render(markdownText);
 		return `<!DOCTYPE html>
 		<html lang="en">
@@ -45,6 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
 			<meta charset="UTF-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<title>Markdown Preview</title>
+			${baseUrl}
 			<link rel="stylesheet" href="https://unpkg.com/github-markdown-css/github-markdown.css">
 			<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets/styles/1c-light.min.css">
 			<style>
@@ -87,9 +89,11 @@ export function activate(context: vscode.ExtensionContext) {
 				enableScripts: true
 			}
 		);
+
 		// Get the active text editor
 		const editor = vscode.window.activeTextEditor;
 		if (editor) {
+			const baseUrl = panel.webview.asWebviewUri(editor.document.uri).toString();
 			var tid: any = null;
 			vscode.workspace.onDidChangeTextDocument((e) => {
 				if (e.document == editor.document) {
@@ -97,11 +101,11 @@ export function activate(context: vscode.ExtensionContext) {
 						clearTimeout(tid);
 					}
 					tid = setTimeout(() => {
-						panel.webview.html = genWebviewContent(editor.document.getText());
+						panel.webview.html = genWebviewContent(editor.document.getText(), baseUrl);
 					}, 500);
 				}
 			});
-			panel.webview.html = genWebviewContent(editor.document.getText());
+			panel.webview.html = genWebviewContent(editor.document.getText(), baseUrl);
 		}
 	}));
 
@@ -110,7 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (editor) {
 			// Get the document text
 			const documentText = editor.document.getText();
-			var finalHtml = genWebviewContent(documentText);
+			var finalHtml = genWebviewContent(documentText, null);
 
 			const browser = await puppeteer.launch({
 				args: ["--no-sandbox"],
